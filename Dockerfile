@@ -1,4 +1,4 @@
-FROM openjdk:17-jdk-slim
+FROM eclipse-temurin:17-jdk
 
 WORKDIR /app
 
@@ -6,4 +6,6 @@ COPY . .
 
 RUN ./mvnw clean package -DskipTests
 
-CMD ["java", "-jar", "target/*.jar"]
+EXPOSE 8080
+
+CMD ["java", "-jar", "target/talentmatch-0.0.1-SNAPSHOT.jar"]
