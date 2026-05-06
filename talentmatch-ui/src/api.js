@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const API = axios.create({
-    baseURL: "https://talentmatch-backend-1sb6.onrender.com/api/..."
+    baseURL: "https://talentmatch-backend-1sb6.onrender.com"
 });
 
 // ✅ Attach token automatically
