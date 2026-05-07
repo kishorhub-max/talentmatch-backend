@@ -29,6 +29,8 @@ public class JwtFilter extends OncePerRequestFilter {
 
         // ✅ VERY IMPORTANT: Skip auth endpoints
         String path = request.getServletPath();
+        System.out.println("PATH = " + path);
+
 
         if (path.startsWith("/auth") ||
                 path.startsWith("/swagger-ui") ||
