@@ -16,10 +16,13 @@ public class CorsConfig {
 
         config.setAllowCredentials(true);
 
+        // Local React
+        config.addAllowedOrigin("http://localhost:3000");
+
+        // Render frontend
         config.addAllowedOrigin("https://talentmatch-frontend-fznr.onrender.com");
 
         config.addAllowedHeader("*");
-
         config.addAllowedMethod("*");
 
         UrlBasedCorsConfigurationSource source =
