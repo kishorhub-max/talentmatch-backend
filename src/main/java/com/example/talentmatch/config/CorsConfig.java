@@ -4,32 +4,40 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
-import org.springframework.web.filter.CorsFilter;
+import org.springframework.web.cors.CorsConfigurationSource;
+
+import java.util.List;
 
 @Configuration
 public class CorsConfig {
 
     @Bean
-    public CorsFilter corsFilter() {
+    public CorsConfigurationSource corsConfigurationSource() {
 
-        CorsConfiguration config = new CorsConfiguration();
+        CorsConfiguration configuration = new CorsConfiguration();
 
-        config.setAllowCredentials(true);
+        configuration.setAllowedOrigins(List.of(
+                "http://localhost:3000",
+                "https://talentmatch-frontend-fznr.onrender.com"
+        ));
 
-        // Local React
-        config.addAllowedOrigin("http://localhost:3000");
+        configuration.setAllowedMethods(List.of(
+                "GET",
+                "POST",
+                "PUT",
+                "DELETE",
+                "OPTIONS"
+        ));
 
-        // Render frontend
-        config.addAllowedOrigin("https://talentmatch-frontend-fznr.onrender.com");
+        configuration.setAllowedHeaders(List.of("*"));
 
-        config.addAllowedHeader("*");
-        config.addAllowedMethod("*");
+        configuration.setAllowCredentials(true);
 
         UrlBasedCorsConfigurationSource source =
                 new UrlBasedCorsConfigurationSource();
 
-        source.registerCorsConfiguration("/**", config);
+        source.registerCorsConfiguration("/**", configuration);
 
-        return new CorsFilter(source);
+        return source;
     }
 }
