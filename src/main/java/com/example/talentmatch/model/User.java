@@ -1,13 +1,13 @@
 package com.example.talentmatch.model;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
-
-
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.List;
 
 @Entity
+@Table(name = "users")   // ADD THIS
 @Getter
 @Setter
 @NoArgsConstructor
@@ -17,6 +17,7 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     @OneToMany(mappedBy = "user")
     @JsonIgnore
     private List<Resume> resumes;
@@ -27,5 +28,4 @@ public class User {
     private String password;
 
     private String role; // ROLE_USER, ROLE_ADMIN
-    
 }
