@@ -31,6 +31,62 @@ public class SecurityConfig {
     }
 
     // 🔐 MAIN SECURITY CONFIG (FIXED)
+//    @Bean
+//    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+//
+//        http
+//                .cors(cors -> {})
+//                .csrf(csrf -> csrf.disable())
+//
+//                .formLogin(form -> form.disable())
+//                .httpBasic(basic -> basic.disable())
+//
+//                .authorizeHttpRequests(auth -> auth
+//
+//                        // ✅ PUBLIC APIs (IMPORTANT)
+//                        .requestMatchers("/auth/**").permitAll()
+//
+//                        // ✅ Test endpoint
+//                        .requestMatchers("/resumes/test").permitAll()
+//
+//                        // ✅ Swagger
+//                        .requestMatchers(
+//                                "/swagger-ui/**",
+//                                "/v3/api-docs/**",
+//                                "/swagger-ui.html"
+//                        ).permitAll()
+//
+//                        // 🔒 Protected APIs
+//                        .requestMatchers("/resumes/**").hasAnyRole("USER", "ADMIN")
+//
+//                        // 🔒 Everything else
+//                        .anyRequest().authenticated()
+//                )
+//
+//                .authenticationProvider(authenticationProvider())
+//
+//                .userDetailsService(userDetailsService)
+//
+//                // 🔐 JWT Filter
+//                .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
+//
+//        return http.build();
+//    }
+//
+//    // 🔐 Authentication Manager
+//    @Bean
+//    public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
+//        return config.getAuthenticationManager();
+//    }
+//
+//    // 🔐 Auth Provider
+//    @Bean
+//    public DaoAuthenticationProvider authenticationProvider() {
+//        DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
+//        authProvider.setUserDetailsService(userDetailsService);
+//        authProvider.setPasswordEncoder(passwordEncoder());
+//        return authProvider;
+//    }
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
@@ -38,53 +94,10 @@ public class SecurityConfig {
                 .cors(cors -> {})
                 .csrf(csrf -> csrf.disable())
 
-                .formLogin(form -> form.disable())
-                .httpBasic(basic -> basic.disable())
-
                 .authorizeHttpRequests(auth -> auth
-
-                        // ✅ PUBLIC APIs (IMPORTANT)
-                        .requestMatchers("/auth/**").permitAll()
-
-                        // ✅ Test endpoint
-                        .requestMatchers("/resumes/test").permitAll()
-
-                        // ✅ Swagger
-                        .requestMatchers(
-                                "/swagger-ui/**",
-                                "/v3/api-docs/**",
-                                "/swagger-ui.html"
-                        ).permitAll()
-
-                        // 🔒 Protected APIs
-                        .requestMatchers("/resumes/**").hasAnyRole("USER", "ADMIN")
-
-                        // 🔒 Everything else
-                        .anyRequest().authenticated()
-                )
-
-                .authenticationProvider(authenticationProvider())
-
-                .userDetailsService(userDetailsService)
-
-                // 🔐 JWT Filter
-                .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
+                        .anyRequest().permitAll()
+                );
 
         return http.build();
-    }
-
-    // 🔐 Authentication Manager
-    @Bean
-    public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
-        return config.getAuthenticationManager();
-    }
-
-    // 🔐 Auth Provider
-    @Bean
-    public DaoAuthenticationProvider authenticationProvider() {
-        DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
-        authProvider.setUserDetailsService(userDetailsService);
-        authProvider.setPasswordEncoder(passwordEncoder());
-        return authProvider;
     }
 }
